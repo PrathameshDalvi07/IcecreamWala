@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using JrChef_Common;
 
 public class IcecreamStickController : MonoBehaviour
 {
@@ -15,9 +16,11 @@ public class IcecreamStickController : MonoBehaviour
     float tempPosition;
     Vector2 clampX = new Vector2(-7f, 7f);
     Vector2 clampY = new Vector2(-3f, 3.5f);
+    Floater floater;
 
     void Start()
     {
+        floater = GetComponent<Floater>();
     }
 
     void Update()
@@ -26,28 +29,37 @@ public class IcecreamStickController : MonoBehaviour
         {
             tempPosition = icecreamStickTransform.position.x + pushLength;
             tempPosition = Mathf.Clamp(tempPosition, clampX.x, clampX.y);
-            icecreamStickTransform.DOMoveX(tempPosition, speed);
+            floater.PauseFloating();
+            icecreamStickTransform.DOMoveX(tempPosition, speed).OnComplete(OnMovementCompleted);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             tempPosition = icecreamStickTransform.position.x - pushLength;
             tempPosition = Mathf.Clamp(tempPosition, clampX.x, clampX.y);
-            icecreamStickTransform.DOMoveX(tempPosition, speed);
+            floater.PauseFloating();
+            icecreamStickTransform.DOMoveX(tempPosition, speed).OnComplete(OnMovementCompleted);
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             tempPosition = icecreamStickTransform.position.y + pushLength;
             tempPosition = Mathf.Clamp(tempPosition, clampY.x, clampY.y);
-            icecreamStickTransform.DOMoveY(tempPosition, speed);
+            floater.PauseFloating();
+            icecreamStickTransform.DOMoveY(tempPosition, speed).OnComplete(OnMovementCompleted);
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             tempPosition = icecreamStickTransform.position.y - pushLength;
             tempPosition = Mathf.Clamp(tempPosition, clampY.x, clampY.y);
-            icecreamStickTransform.DOMoveY(tempPosition, speed);
+            floater.PauseFloating();
+            icecreamStickTransform.DOMoveY(tempPosition, speed).OnComplete(OnMovementCompleted);
         }
+    }
+
+    void OnMovementCompleted()
+    {
+        floater.ResumeFloating();
     }
 }
