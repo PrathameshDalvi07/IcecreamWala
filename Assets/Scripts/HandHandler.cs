@@ -10,6 +10,12 @@ public class HandHandler : MonoBehaviour
     float handSpeed = 0.5f;
     bool canTap = true;
     [SerializeField] GameObject hitObj;
+    public int numOfTap = 0;
+
+    private void Start()
+    {
+        numOfTap = 0;
+    }
 
     private void OnEnable()
     {
@@ -23,9 +29,9 @@ public class HandHandler : MonoBehaviour
 
     public void OnTap(PointerEventData eventData)
     {
+        ++numOfTap;
         var tempPosition = Camera.main.ScreenToWorldPoint(eventData.position);
         tempPosition.z = zPosition;
-        //transform.position = tempPosition;
         if (!canTap) return;
         StartCoroutine(OnTapEnum(tempPosition));
     }

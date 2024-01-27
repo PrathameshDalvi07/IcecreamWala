@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject handObj;
     HandHandler handHandler;
 
+    int timer = 90;
+
     void Start()
     {
         icecreamStickController = icecreamStickObj.GetComponent<IcecreamStickController>();
@@ -24,39 +26,55 @@ public class GameManager : MonoBehaviour
     void Check()
     {
         int checkInt = PlayerPrefs.GetInt("StartOfGameTutorial", 0);
-        if (checkInt == 0)
+        if (checkInt == 1)
         {
             PlayerPrefs.SetInt("StartOfGameTutorial", 1);
             StartCoroutine(StartTutorial());
         }
         else
         {
-            StartRound1();
+            StartCoroutine(StartRound1());
         }
     }
     
     IEnumerator StartTutorial()
     {
         yield return new WaitForSeconds(1f);
-        player1TutorialObj.SetActive(true);
-        yield return new WaitForSeconds(1f);
         IcecreamStickIn();
         yield return new WaitForSeconds(1f);
+        player1TutorialObj.SetActive(true);
+        yield return new WaitUntil(() => icecreamStickController.numOfTap > 1);
         player1TutorialObj.SetActive(false);
         yield return new WaitForSeconds(5f);
         IcecreamStickOut();
+
+
         yield return new WaitForSeconds(0.5f);
         player2TutorialObj.SetActive(true);
         handObj.SetActive(true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitUntil(() => handHandler.numOfTap > 0);
         player2TutorialObj.SetActive(false);
         yield return new WaitForSeconds(5f);
         handObj.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        yield return StartRound1();
     }
 
-    void StartRound1()
+    IEnumerator StartRound1()
     {
-        Debug.Log("Start Round 1");
+        UIManager.Instance.SetTextAndPlayIn("Round 1");
+        yield return new WaitForSeconds(0.5f);
+        UIManager.Instance.SetTextAndPlayIn("3");
+        yield return new WaitForSeconds(0.5f);
+        UIManager.Instance.SetTextAndPlayIn("2");
+        yield return new WaitForSeconds(0.5f);
+        UIManager.Instance.SetTextAndPlayIn("1");
+        yield return new WaitForSeconds(0.5f);
+        UIManager.Instance.SetTimer(timer);
+        IcecreamStickIn();
+        handObj.SetActive(true);
+        yield return new WaitForSeconds(timer);
+        Debug.Log("Done..!!");
     }
 
     void IcecreamStickIn()

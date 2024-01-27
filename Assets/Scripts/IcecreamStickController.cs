@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using JrChef_Common;
 
 public class IcecreamStickController : MonoBehaviour
 {
@@ -17,9 +16,11 @@ public class IcecreamStickController : MonoBehaviour
     Vector2 clampX = new Vector2(-7f, 7f);
     Vector2 clampY = new Vector2(-3f, 3.5f);
     Floater floater;
+    public int numOfTap = 0;
 
     void Start()
     {
+        numOfTap = 0;
         floater = GetComponent<Floater>();
     }
 
@@ -60,6 +61,7 @@ public class IcecreamStickController : MonoBehaviour
 
     void OnMovementCompleted()
     {
+        ++numOfTap;
         floater.ResumeFloating();
     }
 }
