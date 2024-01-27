@@ -57,6 +57,15 @@ public class IcecreamStickController : MonoBehaviour
             floater.PauseFloating();
             icecreamStickTransform.DOMoveY(tempPosition, speed).OnComplete(OnMovementCompleted);
         }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            transform.localScale = new Vector3(1f, -1f, 1f);
+        }
+        else
+        {
+            transform.localScale = new Vector3(1f, 1f, 1f);
+        }
     }
 
     void OnMovementCompleted()
