@@ -11,7 +11,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] float speed = 0.5f;
     float inOutOfHolderSpeed = 2f;
     [SerializeField] TextMeshProUGUI text;
+
+    [SerializeField] TextMeshProUGUI icecreamWalaScoretext;
+    [SerializeField] TextMeshProUGUI customerScoretext;
     public static UIManager Instance { get; private set; }
+    IEnumerator setTimerIEnumumerator;
 
     void Start()
     {
@@ -33,7 +37,7 @@ public class UIManager : MonoBehaviour
 
     public void SetTextAndPlayOut()
     {
-        roundRectTransform.DOAnchorPosY(100f, speed);
+        roundRectTransform.DOAnchorPosY(100f, 0.1f);
     }
 
     public void SetRoundInOut()
@@ -50,7 +54,29 @@ public class UIManager : MonoBehaviour
 
     public void SetTimer(int timer)
     {
-        StartCoroutine(SetTimerIEnum(timer));
+        setTimerIEnumumerator = SetTimerIEnum(timer);
+        StartCoroutine(setTimerIEnumumerator);
+    }
+
+    public void StopTimer()
+    {
+        if (setTimerIEnumumerator != null)
+        {
+            StopCoroutine(setTimerIEnumumerator);
+            setTimerIEnumumerator = null;
+        }
+    }
+
+    public void SetCustomerScore()
+    {
+        ++ScoreManager.custumorScore;
+        customerScoretext.text = ScoreManager.custumorScore.ToString();
+    }
+
+    public void SetIcecreamWalaScore()
+    {
+        ++ScoreManager.icecreamWalaScore;
+        customerScoretext.text = ScoreManager.icecreamWalaScore.ToString();
     }
 
     IEnumerator SetTimerIEnum(int timer)

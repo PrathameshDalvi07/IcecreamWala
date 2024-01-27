@@ -7,7 +7,8 @@ public class HandHandler : MonoBehaviour
 {
     float zPosition = 0f;
     Vector3 handInitialPosition;
-    float handSpeed = 0.5f;
+    Vector3 handEndPosition;
+    float handSpeed = 0.1f;
     bool canTap = true;
     [SerializeField] GameObject hitObj;
     public int numOfTap = 0;
@@ -15,7 +16,8 @@ public class HandHandler : MonoBehaviour
 
     private void Start()
     {
-        handInitialPosition = transform.position;
+        handInitialPosition = new Vector3(6f, -0.5f, 0f);
+        handEndPosition = new Vector3(24f, -0.5f, 0f);
         numOfTap = 0;
     }
 
@@ -56,5 +58,17 @@ public class HandHandler : MonoBehaviour
         hitObj.SetActive(true);
         yield return new WaitForSeconds(0.05f);
         hitObj.SetActive(false);
+    }
+
+    public void HandInOut(bool value)
+    {
+        if (value)
+        {
+            transform.DOMove(handInitialPosition, handSpeed);
+        }
+        else
+        {
+            transform.DOMove(handEndPosition, handSpeed);
+        }
     }
 }

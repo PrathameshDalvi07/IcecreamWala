@@ -28,7 +28,7 @@ public class HitHandler : MonoBehaviour
         int n = Physics2D.OverlapCollider(collider_, contactFilter_, results);
         if (n > 1)
         {
-            Debug.Log("Win!! ");
+            UIManager.Instance.SetCustomerScore();
         }
     }
 }
