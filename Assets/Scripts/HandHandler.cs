@@ -6,14 +6,16 @@ using System.Collections;
 public class HandHandler : MonoBehaviour
 {
     float zPosition = 0f;
-    Vector3 initialPosition = new Vector3(5f, -10f, 0f);
+    Vector3 handInitialPosition;
     float handSpeed = 0.5f;
     bool canTap = true;
     [SerializeField] GameObject hitObj;
     public int numOfTap = 0;
+    [SerializeField] Animator animator;
 
     private void Start()
     {
+        handInitialPosition = transform.position;
         numOfTap = 0;
     }
 
@@ -40,8 +42,10 @@ public class HandHandler : MonoBehaviour
     {
         canTap = false;
         transform.DOMove(tapPosition, handSpeed);
-        yield return new WaitForSeconds(handSpeed);
-        transform.DOMove(initialPosition, handSpeed);
+        yield return new WaitForSeconds(handSpeed / 2);
+        animator.Play("catch");
+        yield return new WaitForSeconds(handSpeed / 2);
+        transform.DOMove(handInitialPosition, handSpeed);
         yield return ToggleHitObjIEnum();
         yield return new WaitForSeconds(handSpeed + 0.3f);
         canTap = true;
