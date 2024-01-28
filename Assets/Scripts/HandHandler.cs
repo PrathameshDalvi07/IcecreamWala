@@ -12,7 +12,7 @@ public class HandHandler : MonoBehaviour
     [SerializeField] GameObject hitObj;
     public int numOfTap = 0;
     [SerializeField] Animator animator;
-
+    [SerializeField] GameObject plus1Prefab;
     private void Start()
     {
         handEndPosition = new Vector3(24f, -0.5f, 0f);
@@ -69,5 +69,10 @@ public class HandHandler : MonoBehaviour
         {
             transform.DOMove(handEndPosition, handSpeed).OnComplete(() => gameObject.SetActive(false));
         }
+    }
+
+    public void AddPlus1()
+    {
+        Instantiate(plus1Prefab, hitObj.transform.position, Quaternion.identity).GetComponent<Plus1Handler>().SetColor(Color.blue);
     }
 }

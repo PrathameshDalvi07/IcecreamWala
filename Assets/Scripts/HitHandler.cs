@@ -9,6 +9,10 @@ public class HitHandler : MonoBehaviour
     ContactFilter2D contactFilter_;
     List<Collider2D> results;
     string icecreamWalaStr = "IcecreamWala";
+    [SerializeField] IcecreamStickController icecreamStickController;
+    [SerializeField] HandHandler handHandler;
+
+
     private void Initialize()
     {
         if (collider_ == null)
@@ -35,10 +39,12 @@ public class HitHandler : MonoBehaviour
                 if (icecreamWalaStr.Contains(item.gameObject.name))
                 {
                     UIManager.Instance.SetIcecreamWalaScore();
+                    icecreamStickController.AddPlus1();
                     return;
                 }
             }
             UIManager.Instance.SetCustomerScore();
+            handHandler.AddPlus1();
         }
     }
 }

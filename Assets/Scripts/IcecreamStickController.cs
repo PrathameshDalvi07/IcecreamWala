@@ -19,6 +19,7 @@ public class IcecreamStickController : MonoBehaviour
     public int numOfTap = 0;
     [SerializeField] GameObject hitObj;
     bool justOnce;
+    [SerializeField] GameObject plus1Prefab;
 
     void Start()
     {
@@ -62,7 +63,7 @@ public class IcecreamStickController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
-            transform.DOScaleY(-1f, 0.1f);
+            transform.DOScaleY(-1f, 0.3f);
             if (transform.localScale.y < -0.5f && !justOnce)
             {
                 OnHitObj();
@@ -72,20 +73,19 @@ public class IcecreamStickController : MonoBehaviour
         else
         {
             justOnce = false;
-            transform.DOScaleY(1f, 0.1f);
+            transform.DOScaleY(1f, 0.3f);
         }
     }
 
     void OnHitObj()
     {
-        Debug.Log("OnHitObj Call");
         StartCoroutine(ToggleHitObjIEnum());
     }
 
     IEnumerator ToggleHitObjIEnum()
     {
         hitObj.SetActive(true);
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.08f);
         hitObj.SetActive(false);
     }
 
@@ -94,5 +94,10 @@ public class IcecreamStickController : MonoBehaviour
     {
         ++numOfTap;
         //floater.ResumeFloating();
+    }
+
+    public void AddPlus1()
+    {
+        Instantiate(plus1Prefab, hitObj.transform.position, Quaternion.identity).GetComponent<Plus1Handler>().SetColor(Color.red);
     }
 }

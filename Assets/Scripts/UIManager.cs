@@ -22,6 +22,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] Sprite customerSprite;
     [SerializeField] Sprite icecreamWalaSprite;
 
+    [SerializeField] GameObject customerObj;
+    [SerializeField] GameObject icecreamManObj;
     void Start()
     {
         Instance = this;
@@ -75,13 +77,13 @@ public class UIManager : MonoBehaviour
     public void SetCustomerScore()
     {
         ++ScoreManager.custumorScore;
-        slider_.value -= 0.01f;
+        slider_.value -= 0.05f;
     }
 
     public void SetIcecreamWalaScore()
     {
         ++ScoreManager.icecreamWalaScore;
-        slider_.value += 0.01f;
+        slider_.value += 0.05f;
     }
 
     IEnumerator SetTimerIEnum(int timer)
@@ -96,22 +98,24 @@ public class UIManager : MonoBehaviour
 
     public void ResetSliderAndSetScore()
     {
-        if (slider_.value > 0.5f)
+        if (slider_.value < 0.5f)
         {
-            ++ScoreManager.icecreamWalaChartScore;
+            ++ScoreManager.custumorChartScore;
         }
         else
         {
-            ++ScoreManager.custumorChartScore;
+            ++ScoreManager.icecreamWalaChartScore;
         }
 
         if (ScoreManager.icecreamWalaChartScore > ScoreManager.custumorChartScore)
         {
             winnerSR.sprite = icecreamWalaSprite;
+            icecreamManObj.SetActive(true);
         }
         else
         {
             winnerSR.sprite = customerSprite;
+            customerObj.SetActive(true);
         }
 
         icecreamWalaChartScoretext.text = ScoreManager.icecreamWalaChartScore.ToString();

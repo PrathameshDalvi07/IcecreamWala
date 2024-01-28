@@ -16,7 +16,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject scoreObj;
     [SerializeField] GameObject winnerObj;
 
-    int timer = 20;
+
+    int timer = 50;
 
     void Start()
     {
@@ -100,12 +101,12 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         UIManager.Instance.SetTextAndPlayIn("1");
         yield return new WaitForSeconds(1f);
-        UIManager.Instance.SetTextAndPlayIn((timer + 10).ToString());
-        UIManager.Instance.SetTimer(timer + 10);
+        UIManager.Instance.SetTextAndPlayIn((timer).ToString());
+        UIManager.Instance.SetTimer(timer);
         yield return new WaitForSeconds(1f);
         IcecreamStickIn();
         SetActiveHand(true);
-        yield return new WaitForSeconds(timer + 10 - 1);
+        yield return new WaitForSeconds(timer - 1);
         UIManager.Instance.StopTimer();
         IcecreamStickOut();
         SetActiveHand(false);
@@ -127,12 +128,12 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         UIManager.Instance.SetTextAndPlayIn("1");
         yield return new WaitForSeconds(1f);
-        UIManager.Instance.SetTextAndPlayIn((timer + 20).ToString());
-        UIManager.Instance.SetTimer(timer + 20);
+        UIManager.Instance.SetTextAndPlayIn((timer).ToString());
+        UIManager.Instance.SetTimer(timer);
         yield return new WaitForSeconds(1f);
         IcecreamStickIn();
         SetActiveHand(true);
-        yield return new WaitForSeconds(timer + 20 - 1);
+        yield return new WaitForSeconds(timer - 1);
         UIManager.Instance.StopTimer();
         IcecreamStickOut();
         SetActiveHand(false);
