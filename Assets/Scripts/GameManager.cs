@@ -13,8 +13,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject handObj;
     HandHandler handHandler;
+    [SerializeField] GameObject scoreObj;
+    [SerializeField] GameObject winnerObj;
 
-    int timer = 30;
+    int timer = 20;
 
     void Start()
     {
@@ -40,12 +42,12 @@ public class GameManager : MonoBehaviour
     IEnumerator StartTutorial()
     {
         yield return new WaitForSeconds(1f);
-        IcecreamStickIn();
-        yield return new WaitForSeconds(1f);
         player1TutorialObj.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        IcecreamStickIn();
         yield return new WaitUntil(() => icecreamStickController.numOfTap > 1);
         player1TutorialObj.SetActive(false);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         IcecreamStickOut();
 
 
@@ -54,35 +56,37 @@ public class GameManager : MonoBehaviour
         handObj.SetActive(true);
         yield return new WaitUntil(() => handHandler.numOfTap > 0);
         player2TutorialObj.SetActive(false);
-        yield return new WaitForSeconds(5f);
-        handObj.SetActive(false);
+        yield return new WaitForSeconds(3f);
+        SetActiveHand(false);
         yield return new WaitForSeconds(1f);
         yield return StartRound1();
     }
 
     IEnumerator StartRound1()
     {
+        scoreObj.SetActive(true);
         UIManager.Instance.SetTextAndPlayIn("Round 1");
         yield return new WaitForSeconds(2.5f);
         UIManager.Instance.SetTextAndPlayIn("3");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         UIManager.Instance.SetTextAndPlayIn("2");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         UIManager.Instance.SetTextAndPlayIn("1");
-        yield return new WaitForSeconds(0.25f);
-        UIManager.Instance.SetTextAndPlayIn("");
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(1f);
+        UIManager.Instance.SetTextAndPlayIn(timer.ToString());
         UIManager.Instance.SetTimer(timer);
+        yield return new WaitForSeconds(1f);
         IcecreamStickIn();
         SetActiveHand(true);
-        yield return new WaitForSeconds(timer);
+        yield return new WaitForSeconds(timer - 1);
         UIManager.Instance.StopTimer();
-        UIManager.Instance.SetTextAndPlayIn("Time Up.!!");
-        yield return new WaitForSeconds(1f);
-        UIManager.Instance.SetTextAndPlayOut();
         IcecreamStickOut();
         SetActiveHand(false);
-        yield return new WaitForSeconds(0.5f);
+        UIManager.Instance.SetTextAndPlayIn("Time Up.!!");
+        UIManager.Instance.ResetSliderAndSetScore();
+        yield return new WaitForSeconds(1f);
+        UIManager.Instance.SetTextAndPlayOut();
+        yield return new WaitForSeconds(1f);
         yield return StartRound2();
     }
 
@@ -91,58 +95,60 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.SetTextAndPlayIn("Round 2");
         yield return new WaitForSeconds(2.5f);
         UIManager.Instance.SetTextAndPlayIn("3");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         UIManager.Instance.SetTextAndPlayIn("2");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         UIManager.Instance.SetTextAndPlayIn("1");
-        yield return new WaitForSeconds(0.25f);
-        UIManager.Instance.SetTextAndPlayIn("");
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(1f);
+        UIManager.Instance.SetTextAndPlayIn((timer + 10).ToString());
         UIManager.Instance.SetTimer(timer + 10);
+        yield return new WaitForSeconds(1f);
         IcecreamStickIn();
         SetActiveHand(true);
-        yield return new WaitForSeconds(timer + 10);
+        yield return new WaitForSeconds(timer + 10 - 1);
         UIManager.Instance.StopTimer();
-        UIManager.Instance.SetTextAndPlayIn("Time Up.!!");
-        yield return new WaitForSeconds(1f);
-        UIManager.Instance.SetTextAndPlayOut();
         IcecreamStickOut();
         SetActiveHand(false);
-        yield return new WaitForSeconds(0.5f);
+        UIManager.Instance.SetTextAndPlayIn("Time Up.!!");
+        UIManager.Instance.ResetSliderAndSetScore();
+        yield return new WaitForSeconds(1f);
+        UIManager.Instance.SetTextAndPlayOut();
+        yield return new WaitForSeconds(1f);
         yield return StartRound3();
     }
 
     IEnumerator StartRound3()
     {
-        UIManager.Instance.SetTextAndPlayIn("Round 3");
+        UIManager.Instance.SetTextAndPlayIn("Final Round");
         yield return new WaitForSeconds(2.5f);
         UIManager.Instance.SetTextAndPlayIn("3");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         UIManager.Instance.SetTextAndPlayIn("2");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         UIManager.Instance.SetTextAndPlayIn("1");
-        yield return new WaitForSeconds(0.25f);
-        UIManager.Instance.SetTextAndPlayIn("");
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(1f);
+        UIManager.Instance.SetTextAndPlayIn((timer + 20).ToString());
         UIManager.Instance.SetTimer(timer + 20);
+        yield return new WaitForSeconds(1f);
         IcecreamStickIn();
         SetActiveHand(true);
-        yield return new WaitForSeconds(timer + 20);
+        yield return new WaitForSeconds(timer + 20 - 1);
         UIManager.Instance.StopTimer();
-        UIManager.Instance.SetTextAndPlayIn("Time Up.!!");
-        yield return new WaitForSeconds(1f);
-        UIManager.Instance.SetTextAndPlayOut();
         IcecreamStickOut();
         SetActiveHand(false);
-        yield return new WaitForSeconds(0.5f);
-        //yield return StartRound2();
+        UIManager.Instance.SetTextAndPlayIn("Time Up.!!");
+        UIManager.Instance.ResetSliderAndSetScore();
+        yield return new WaitForSeconds(1f);
+        UIManager.Instance.SetTextAndPlayOut();
+        yield return new WaitForSeconds(1f);
+        winnerObj.SetActive(true);
     }
 
     void IcecreamStickIn()
     {
         icecreamStickObj.SetActive(true);
         icecreamStickController.enabled = true;
-        icecreamStickObj.transform.DOMoveX(0f, 0.5f).SetEase(Ease.InOutSine);
+        icecreamStickObj.transform.DOMove(new Vector2(2f, 1.24f), 0.5f).SetEase(Ease.InOutSine);
     }
 
     void IcecreamStickOut()
@@ -153,6 +159,8 @@ public class GameManager : MonoBehaviour
 
     void SetActiveHand(bool value)
     {
+        if(value)
+            handObj.SetActive(true);
         handHandler.HandInOut(value);
     }
 }

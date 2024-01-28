@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HitHandler : MonoBehaviour
@@ -7,7 +8,7 @@ public class HitHandler : MonoBehaviour
     Collider2D collider_;
     ContactFilter2D contactFilter_;
     List<Collider2D> results;
-
+    string icecreamWalaStr = "IcecreamWala";
     private void Initialize()
     {
         if (collider_ == null)
@@ -26,8 +27,17 @@ public class HitHandler : MonoBehaviour
     {
         Initialize();
         int n = Physics2D.OverlapCollider(collider_, contactFilter_, results);
+
         if (n > 1)
         {
+            foreach (var item in results)
+            {
+                if (icecreamWalaStr.Contains(item.gameObject.name))
+                {
+                    UIManager.Instance.SetIcecreamWalaScore();
+                    return;
+                }
+            }
             UIManager.Instance.SetCustomerScore();
         }
     }
