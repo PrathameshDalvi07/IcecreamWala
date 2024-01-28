@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,11 +12,18 @@ public class UIManager : MonoBehaviour
     [SerializeField] float speed = 0.5f;
     float inOutOfHolderSpeed = 2f;
     [SerializeField] TextMeshProUGUI text;
+    [SerializeField] Slider slider_;
 
     [SerializeField] TextMeshProUGUI icecreamWalaScoretext;
     [SerializeField] TextMeshProUGUI customerScoretext;
+
+    [SerializeField] TextMeshProUGUI icecreamWalaChartScoretext;
+    [SerializeField] TextMeshProUGUI customerChartScoretext;
     public static UIManager Instance { get; private set; }
     IEnumerator setTimerIEnumumerator;
+    [SerializeField] SpriteRenderer winnerSR;
+    [SerializeField] Sprite customerSprite;
+    [SerializeField] Sprite icecreamWalaSprite;
 
     void Start()
     {
@@ -71,6 +79,7 @@ public class UIManager : MonoBehaviour
     {
         ++ScoreManager.custumorScore;
         customerScoretext.text = ScoreManager.custumorScore.ToString();
+        slider_.value += 0.01f;
     }
 
     public void SetIcecreamWalaScore()
@@ -87,5 +96,30 @@ public class UIManager : MonoBehaviour
             text.text = timer.ToString();
             --timer;
         }
+    }
+
+    public void ResetSliderAndSetScore()
+    {
+        if (slider_.value > 0.5f)
+        {
+            ++ScoreManager.custumorChartScore;
+        }
+        else
+        {
+            ++ScoreManager.icecreamWalaChartScore;
+        }
+
+        if (ScoreManager.icecreamWalaChartScore > ScoreManager.custumorChartScore)
+        {
+            winnerSR.sprite = icecreamWalaSprite;
+        }
+        else
+        {
+            winnerSR.sprite = customerSprite;
+        }
+
+        icecreamWalaChartScoretext.text = ScoreManager.icecreamWalaChartScore.ToString();
+        customerChartScoretext.text = ScoreManager.custumorChartScore.ToString();
+        slider_.value = 0.5f;
     }
 }
