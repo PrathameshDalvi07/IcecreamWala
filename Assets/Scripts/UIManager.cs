@@ -14,9 +14,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI text;
     [SerializeField] Slider slider_;
 
-    [SerializeField] TextMeshProUGUI icecreamWalaScoretext;
-    [SerializeField] TextMeshProUGUI customerScoretext;
-
     [SerializeField] TextMeshProUGUI icecreamWalaChartScoretext;
     [SerializeField] TextMeshProUGUI customerChartScoretext;
     public static UIManager Instance { get; private set; }
@@ -78,14 +75,13 @@ public class UIManager : MonoBehaviour
     public void SetCustomerScore()
     {
         ++ScoreManager.custumorScore;
-        customerScoretext.text = ScoreManager.custumorScore.ToString();
-        slider_.value += 0.01f;
+        slider_.value -= 0.01f;
     }
 
     public void SetIcecreamWalaScore()
     {
         ++ScoreManager.icecreamWalaScore;
-        customerScoretext.text = ScoreManager.icecreamWalaScore.ToString();
+        slider_.value += 0.01f;
     }
 
     IEnumerator SetTimerIEnum(int timer)
@@ -102,11 +98,11 @@ public class UIManager : MonoBehaviour
     {
         if (slider_.value > 0.5f)
         {
-            ++ScoreManager.custumorChartScore;
+            ++ScoreManager.icecreamWalaChartScore;
         }
         else
         {
-            ++ScoreManager.icecreamWalaChartScore;
+            ++ScoreManager.custumorChartScore;
         }
 
         if (ScoreManager.icecreamWalaChartScore > ScoreManager.custumorChartScore)

@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject player1TutorialObj;
     [SerializeField] GameObject player2TutorialObj;
-    [SerializeField] GameObject player1TutorialBoraderLineObj;
 
     [SerializeField] GameObject icecreamStickObj;
     IcecreamStickController icecreamStickController;
@@ -48,9 +47,7 @@ public class GameManager : MonoBehaviour
         IcecreamStickIn();
         yield return new WaitUntil(() => icecreamStickController.numOfTap > 1);
         player1TutorialObj.SetActive(false);
-        player1TutorialBoraderLineObj.SetActive(true);
-        yield return new WaitForSeconds(5f);
-        player1TutorialBoraderLineObj.SetActive(false);
+        yield return new WaitForSeconds(3f);
         IcecreamStickOut();
 
 
@@ -59,7 +56,7 @@ public class GameManager : MonoBehaviour
         handObj.SetActive(true);
         yield return new WaitUntil(() => handHandler.numOfTap > 0);
         player2TutorialObj.SetActive(false);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         SetActiveHand(false);
         yield return new WaitForSeconds(1f);
         yield return StartRound1();

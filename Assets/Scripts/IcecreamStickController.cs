@@ -17,6 +17,8 @@ public class IcecreamStickController : MonoBehaviour
     Vector2 icecreamClampY = new Vector2(-2.86f, 2.61f);
     Floater floater;
     public int numOfTap = 0;
+    [SerializeField] GameObject hitObj;
+    bool justOnce;
 
     void Start()
     {
@@ -61,12 +63,32 @@ public class IcecreamStickController : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             transform.DOScaleY(-1f, 0.1f);
+            if (transform.localScale.y < -0.5f && !justOnce)
+            {
+                OnHitObj();
+                justOnce = true;
+            }
         }
         else
         {
+            justOnce = false;
             transform.DOScaleY(1f, 0.1f);
         }
     }
+
+    void OnHitObj()
+    {
+        Debug.Log("OnHitObj Call");
+        StartCoroutine(ToggleHitObjIEnum());
+    }
+
+    IEnumerator ToggleHitObjIEnum()
+    {
+        hitObj.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        hitObj.SetActive(false);
+    }
+
 
     void OnMovementCompleted()
     {
