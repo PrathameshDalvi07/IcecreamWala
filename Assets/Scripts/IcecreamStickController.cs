@@ -14,7 +14,7 @@ public class IcecreamStickController : MonoBehaviour
     bool canTap = true;
     float tempPosition;
     Vector2 icecreamClampX = new Vector2(-5.5f, 3.2f);
-    Vector2 icecreamClampY = new Vector2(-2.86f, 1.24f);
+    Vector2 icecreamClampY = new Vector2(-2.86f, 2.61f);
     Floater floater;
     public int numOfTap = 0;
 
@@ -26,51 +26,51 @@ public class IcecreamStickController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
-            tempPosition = icecreamStickTransform.position.x + pushLength;
+            tempPosition = transform.position.x + pushLength;
             tempPosition = Mathf.Clamp(tempPosition, icecreamClampX.x, icecreamClampX.y);
-            floater.PauseFloating();
-            icecreamStickTransform.DOMoveX(tempPosition, speed).OnComplete(OnMovementCompleted);
+            //floater.PauseFloating();
+            transform.DOMoveX(tempPosition, speed).OnComplete(OnMovementCompleted);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
-            tempPosition = icecreamStickTransform.position.x - pushLength;
+            tempPosition = transform.position.x - pushLength;
             tempPosition = Mathf.Clamp(tempPosition, icecreamClampX.x, icecreamClampX.y);
-            floater.PauseFloating();
-            icecreamStickTransform.DOMoveX(tempPosition, speed).OnComplete(OnMovementCompleted);
+            //floater.PauseFloating();
+            transform.DOMoveX(tempPosition, speed).OnComplete(OnMovementCompleted);
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
-            tempPosition = icecreamStickTransform.position.y + pushLength;
+            tempPosition = transform.position.y + pushLength;
             tempPosition = Mathf.Clamp(tempPosition, icecreamClampY.x, icecreamClampY.y);
-            floater.PauseFloating();
-            icecreamStickTransform.DOMoveY(tempPosition, speed).OnComplete(OnMovementCompleted);
+            //floater.PauseFloating();
+            transform.DOMoveY(tempPosition, speed).OnComplete(OnMovementCompleted);
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
-            tempPosition = icecreamStickTransform.position.y - pushLength;
+            tempPosition = transform.position.y - pushLength;
             tempPosition = Mathf.Clamp(tempPosition, icecreamClampY.x, icecreamClampY.y);
-            floater.PauseFloating();
-            icecreamStickTransform.DOMoveY(tempPosition, speed).OnComplete(OnMovementCompleted);
+            //floater.PauseFloating();
+            transform.DOMoveY(tempPosition, speed).OnComplete(OnMovementCompleted);
         }
 
         if (Input.GetKey(KeyCode.Space))
         {
-            transform.localScale = new Vector3(1f, -1f, 1f);
+            transform.DOScaleY(-1f, 0.1f);
         }
         else
         {
-            transform.localScale = new Vector3(1f, 1f, 1f);
+            transform.DOScaleY(1f, 0.1f);
         }
     }
 
     void OnMovementCompleted()
     {
         ++numOfTap;
-        floater.ResumeFloating();
+        //floater.ResumeFloating();
     }
 }

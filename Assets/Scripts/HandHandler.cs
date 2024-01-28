@@ -6,7 +6,6 @@ using System.Collections;
 public class HandHandler : MonoBehaviour
 {
     float zPosition = 0f;
-    Vector3 handInitialPosition;
     Vector3 handEndPosition;
     float handSpeed = 0.1f;
     bool canTap = true;
@@ -16,7 +15,6 @@ public class HandHandler : MonoBehaviour
 
     private void Start()
     {
-        handInitialPosition = new Vector3(6f, -0.5f, 0f);
         handEndPosition = new Vector3(24f, -0.5f, 0f);
         numOfTap = 0;
     }
@@ -47,7 +45,7 @@ public class HandHandler : MonoBehaviour
         yield return new WaitForSeconds(handSpeed / 2);
         animator.Play("catch");
         yield return new WaitForSeconds(handSpeed / 2);
-        transform.DOMove(handInitialPosition, handSpeed);
+        transform.DOMove(new Vector3(6f, -0.5f, 0f), handSpeed);
         yield return ToggleHitObjIEnum();
         yield return new WaitForSeconds(handSpeed + 0.3f);
         canTap = true;
@@ -64,11 +62,12 @@ public class HandHandler : MonoBehaviour
     {
         if (value)
         {
-            transform.DOMove(handInitialPosition, handSpeed);
+            transform.DOMove(new Vector3(6f, -0.5f, 0f), handSpeed);
+            canTap = true;
         }
         else
         {
-            transform.DOMove(handEndPosition, handSpeed);
+            transform.DOMove(handEndPosition, handSpeed).OnComplete(() => gameObject.SetActive(false));
         }
     }
 }

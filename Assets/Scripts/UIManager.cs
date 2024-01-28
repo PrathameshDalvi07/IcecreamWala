@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
 
     public void SetTextAndPlayOut()
     {
-        roundRectTransform.DOAnchorPosY(100f, 0.1f);
+        roundRectTransform.DOAnchorPosY(130f, 0.1f);
     }
 
     public void SetRoundInOut()
@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
     {
         roundRectTransform.DOAnchorPosY(0f, speed);
         yield return new WaitForSeconds(inOutOfHolderSpeed);
-        roundRectTransform.DOAnchorPosY(100f, speed);
+        roundRectTransform.DOAnchorPosY(130f, speed);
     }
 
     public void SetTimer(int timer)
